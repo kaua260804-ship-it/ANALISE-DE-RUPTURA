@@ -113,7 +113,7 @@ class DashboardManager {
 
     updateMiniTables(data) {
         this.renderTopProdutos(data);
-        this.renderCategorias(data);
+        this.renderRupturaPorLoja(data);
         this.renderRupturas(data);
         this.renderStatusEstoque(data);
     }
@@ -124,7 +124,7 @@ class DashboardManager {
         // Filtrar apenas produtos com RUPTURA GERAL
         const rupturaGeral = data.filter(item => item.ruptura === 'RUPTURA GERAL');
         
-        // Agrupar por SKU para evitar duplicatas
+        // Agrupar por SKU
         const skuMap = new Map();
         rupturaGeral.forEach(item => {
             const key = item.codigoProduto;
@@ -132,17 +132,14 @@ class DashboardManager {
                 skuMap.set(key, {
                     codigoProduto: item.codigoProduto,
                     produto: item.produto,
-                    mediaVendaMes: item.mediaVendaMes || 0,
-                    mediaVendaMesR: item.mediaVendaMesR || 0
+                    mediaVendaMes: item.mediaVendaMes || 0
                 });
             } else {
                 const existing = skuMap.get(key);
                 existing.mediaVendaMes += item.mediaVendaMes || 0;
-                existing.mediaVendaMesR += item.mediaVendaMesR || 0;
             }
         });
         
-        // Ordenar por média de venda mês (maior para menor)
         const topProdutos = Array.from(skuMap.values())
             .sort((a, b) => b.mediaVendaMes - a.mediaVendaMes)
             .slice(0, 10);
@@ -176,52 +173,64 @@ class DashboardManager {
         this.elements.topProdutosTable.innerHTML = html;
     }
 
-    renderCategorias(data) {
+    renderRupturaPorLoja(data) {
         if (!this.elements.categoriasTable) return;
         
-        // Filtrar apenas produtos com RUPTURA GERAL
-        const rupturaGeral = data.filter(item => item.ruptura === 'RUPTURA GERAL');
+        // Agrupar por empresa/loja
+        const lojaMap = new Map();
         
-        // Agrupar por categoria
-        const categoriaMap = new Map();
-        rupturaGeral.forEach(item => {
-            const categoria = item.categoria || 'Sem Categoria';
-            if (!categoriaMap.has(categoria)) {
-                categoriaMap.set(categoria, {
-                    nome: categoria,
-                    quantidade: 0
+        data.forEach(item => {
+            const loja = item.empresa || 'Sem Loja';
+            
+            if (!lojaMap.has(loja)) {
+                lojaMap.set(loja, {
+                    nome: loja,
+                    rupturaGeral: 0,
+                    possivelRuptura: 0,
+                    rupturaLoja: 0,
+                    semRuptura: 0
                 });
             }
-            categoriaMap.get(categoria).quantidade++;
+            
+            const lojaData = lojaMap.get(loja);
+            
+            if (item.ruptura === 'RUPTURA GERAL') {
+                lojaData.rupturaGeral++;
+            } else if (item.ruptura === 'POSSIVEL RUPTURA') {
+                lojaData.possivelRuptura++;
+            } else if (item.ruptura === 'RUPTURA LOJA') {
+                lojaData.rupturaLoja++;
+            } else {
+                lojaData.semRuptura++;
+            }
         });
         
-        // Ordenar por quantidade (maior para menor)
-        const categorias = Array.from(categoriaMap.values())
-            .sort((a, b) => b.quantidade - a.quantidade)
+        const lojas = Array.from(lojaMap.values())
+            .sort((a, b) => b.rupturaGeral - a.rupturaGeral)
             .slice(0, 15);
         
-        if (categorias.length === 0) {
-            this.elements.categoriasTable.innerHTML = this.createEmptyMessage('Nenhuma categoria com ruptura geral');
+        if (lojas.length === 0) {
+            this.elements.categoriasTable.innerHTML = this.createEmptyMessage('Nenhuma loja encontrada');
             return;
         }
-        
-        const totalRupturas = categorias.reduce((sum, cat) => sum + cat.quantidade, 0);
         
         const html = `
             <table class="mini-table">
                 <thead>
                     <tr>
-                        <th>Categoria</th>
-                        <th>Qtd Rupturas</th>
-                        <th>%</th>
+                        <th>Loja</th>
+                        <th>Ruptura Geral</th>
+                        <th>Possível Ruptura</th>
+                        <th>Ruptura Loja</th>
                     </tr>
                 </thead>
                 <tbody>
-                    ${categorias.map(cat => `
+                    ${lojas.map(loja => `
                         <tr>
-                            <td title="${cat.nome}">${this.truncateString(cat.nome, 25)}</td>
-                            <td><strong>${cat.quantidade}</strong></td>
-                            <td>${(cat.quantidade / totalRupturas * 100).toFixed(1)}%</td>
+                            <td title="${loja.nome}">${this.truncateString(loja.nome, 20)}</td>
+                            <td><span class="badge badge-danger">${loja.rupturaGeral}</span></td>
+                            <td><span class="badge badge-warning">${loja.possivelRuptura}</span></td>
+                            <td><span class="badge badge-info">${loja.rupturaLoja}</span></td>
                         </tr>
                     `).join('')}
                 </tbody>
