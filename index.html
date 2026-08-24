@@ -1,210 +1,114 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Análise de Dados - Fribal</title>
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <svg width="40" height="40" viewBox="0 0 40 40">
-                        <rect width="40" height="40" rx="8" fill="#2563eb"/>
-                        <text x="20" y="27" text-anchor="middle" fill="white" font-size="20" font-weight="bold">F</text>
-                    </svg>
-                    <h1>Análise de Dados Fribal</h1>
-                </div>
-                <button id="btnReload" class="btn-reload">
-                    <span>⟳</span> Recarregar Dados
-                </button>
-            </div>
+<!-- Filters -->
+<section class="filters">
+    <div class="filter-header">
+        <h2>Filtros</h2>
+        <button id="btnLimparFiltros" class="btn-secondary">Limpar Filtros</button>
+    </div>
+    <div class="filter-grid">
+        <div class="filter-group">
+            <label for="filterMediaVdAcima">Média de VD Acima de</label>
+            <input type="number" id="filterMediaVdAcima" placeholder="Ex: 20" class="filter-input" min="0" step="0.01">
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Loading Indicator -->
-        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
-            <div class="spinner"></div>
-            <p>Carregando dados...</p>
+        
+        <div class="filter-group">
+            <label for="filterMediaVdAbaixo">Média de VD Abaixo de</label>
+            <input type="number" id="filterMediaVdAbaixo" placeholder="Ex: 100" class="filter-input" min="0" step="0.01">
         </div>
-
-        <!-- Error Message -->
-        <div id="errorMessage" class="error-message" style="display: none;"></div>
-
-        <!-- Dashboard Cards -->
-        <section class="dashboard" id="dashboardCards">
-            <!-- Cards serão gerados dinamicamente -->
-        </section>
-
-        <!-- Mini Tables -->
-        <section class="mini-tables">
-            <div class="mini-table-container">
-                <h3>TOP 10 PRODUTOS EM RUPTURA GERAL</h3>
-                <div id="topProdutosTable" class="mini-table-content"></div>
-            </div>
-            <div class="mini-table-container">
-                <h3>RUPTURA GERAL POR CATEGORIA</h3>
-                <div id="categoriasTable" class="mini-table-content"></div>
-            </div>
-            <div class="mini-table-container">
-                <h3>Resumo de Rupturas</h3>
-                <div id="rupturasTable" class="mini-table-content"></div>
-            </div>
-            <div class="mini-table-container">
-                <h3>Status de Estoque</h3>
-                <div id="statusEstoqueTable" class="mini-table-content"></div>
-            </div>
-        </section>
-
-        <!-- Filters -->
-        <section class="filters">
-            <div class="filter-header">
-                <h2>Filtros</h2>
-                <button id="btnLimparFiltros" class="btn-secondary">Limpar Filtros</button>
-            </div>
-            <div class="filter-grid">
-                <div class="filter-group">
-                    <label for="searchGlobal">Busca Rápida</label>
-                    <input type="text" id="searchGlobal" placeholder="Digite para buscar..." class="filter-input">
-                </div>
-                
-                <div class="filter-group">
-                    <label for="filterCodigo">Código Produto</label>
-                    <input type="text" id="filterCodigo" placeholder="Digite o código..." class="filter-input">
-                </div>
-                
-                <div class="filter-group">
-                    <label for="filterProduto">Produto</label>
-                    <input type="text" id="filterProduto" placeholder="Digite o produto..." class="filter-input">
-                </div>
-                
-                <div class="filter-group">
-                    <label for="filterEmpresa">Empresa</label>
-                    <select id="filterEmpresa" class="filter-input">
-                        <option value="">Todas Empresas</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label for="filterComprador">Comprador</label>
-                    <select id="filterComprador" class="filter-input">
-                        <option value="">Todos Compradores</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label for="filterCategoria">Categoria</label>
-                    <select id="filterCategoria" class="filter-input">
-                        <option value="">Todas Categorias</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label for="filterGrupo">Grupo</label>
-                    <select id="filterGrupo" class="filter-input">
-                        <option value="">Todos Grupos</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label for="filterSubgrupo">Subgrupo</label>
-                    <select id="filterSubgrupo" class="filter-input">
-                        <option value="">Todos Subgrupos</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label for="filterRuptura">Ruptura</label>
-                    <select id="filterRuptura" class="filter-input">
-                        <option value="">Todas Rupturas</option>
-                        <option value="RUPTURA LOJA">RUPTURA LOJA</option>
-                        <option value="RUPTURA GERAL">RUPTURA GERAL</option>
-                        <option value="POSSIVEL RUPTURA">POSSÍVEL RUPTURA</option>
-                        <option value="SEM RUPTURA">SEM RUPTURA</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label for="filterStatusEstoque">Status Estoque</label>
-                    <select id="filterStatusEstoque" class="filter-input">
-                        <option value="">Todos Status</option>
-                        <option value="COM ESTOQUE LOJA / COM ESTOQUE CDBR">COM ESTOQUE LOJA / COM ESTOQUE CDBR</option>
-                        <option value="SEM ESTOQUE LOJA / SEM ESTOQUE CDBR">SEM ESTOQUE LOJA / SEM ESTOQUE CDBR</option>
-                        <option value="COM ESTOQUE LOJA / SEM ESTOQUE CDBR">COM ESTOQUE LOJA / SEM ESTOQUE CDBR</option>
-                        <option value="SEM ESTOQUE LOJA / COM ESTOQUE CDBR">SEM ESTOQUE LOJA / COM ESTOQUE CDBR</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label for="filterTemVenda">Vendas</label>
-                    <select id="filterTemVenda" class="filter-input">
-                        <option value="">Todas Vendas</option>
-                        <option value="COM VENDA">COM VENDA</option>
-                        <option value="SEM VENDA">SEM VENDA</option>
-                    </select>
-                </div>
-            </div>
-        </section>
-
-        <!-- Table -->
-        <section class="table-container">
-            <div class="table-header">
-                <h2>Dados Processados</h2>
-                <div>
-                    <button id="btnExportCSV" class="btn-export">Exportar CSV</button>
-                    <button id="btnExportExcel" class="btn-export">Exportar Excel</button>
-                </div>
-            </div>
-            <div class="table-wrapper">
-                <table id="dataTable">
-                    <thead>
-                        <tr>
-                            <th data-sort="codigoProduto">Código Produto</th>
-                            <th data-sort="produto">Produto</th>
-                            <th data-sort="empresa">Empresa</th>
-                            <th data-sort="quantidadeDisponivel">Estq LJ</th>
-                            <th data-sort="quantidadeDisponivelCDBR">Estq CDBR</th>
-                            <th data-sort="mediaVendaMes">Média Vda Mês</th>
-                            <th data-sort="mediaVendaMesR">Média Vda Mês R$</th>
-                            <th data-sort="ruptura">Ruptura</th>
-                            <th data-sort="comprador">Comprador</th>
-                            <th data-sort="categoria">Categoria</th>
-                            <th data-sort="grupo">Grupo</th>
-                            <th data-sort="subgrupo">Subgrupo</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody"></tbody>
-                </table>
-            </div>
-            <div class="pagination">
-                <button id="btnAnterior" class="btn-pagination">Anterior</button>
-                <span id="pageInfo">Página 1 de 1</span>
-                <button id="btnProxima" class="btn-pagination">Próxima</button>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Fribal - Sistema de Análise de Dados</p>
+        
+        <div class="filter-group">
+            <label for="filterCodigo">Código Produto</label>
+            <input type="text" id="filterCodigo" placeholder="Digite o código..." class="filter-input">
         </div>
-    </footer>
+        
+        <div class="filter-group">
+            <label for="filterProduto">Produto</label>
+            <input type="text" id="filterProduto" placeholder="Digite o produto..." class="filter-input">
+        </div>
+        
+        <div class="filter-group">
+            <label for="filterEmpresa">Empresa (Múltipla)</label>
+            <select id="filterEmpresa" class="filter-input" multiple size="4">
+                <option value="">Todas Empresas</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label for="filterComprador">Comprador (Múltiplo)</label>
+            <select id="filterComprador" class="filter-input" multiple size="4">
+                <option value="">Todos Compradores</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label for="filterCategoria">Categoria (Múltipla)</label>
+            <select id="filterCategoria" class="filter-input" multiple size="4">
+                <option value="">Todas Categorias</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label for="filterGrupo">Grupo (Múltiplo)</label>
+            <select id="filterGrupo" class="filter-input" multiple size="4">
+                <option value="">Todos Grupos</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label for="filterSubgrupo">Subgrupo (Múltiplo)</label>
+            <select id="filterSubgrupo" class="filter-input" multiple size="4">
+                <option value="">Todos Subgrupos</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label for="filterRuptura">Ruptura</label>
+            <select id="filterRuptura" class="filter-input">
+                <option value="">Todas Rupturas</option>
+                <option value="RUPTURA LOJA">RUPTURA LOJA</option>
+                <option value="RUPTURA GERAL">RUPTURA GERAL</option>
+                <option value="POSSIVEL RUPTURA">POSSÍVEL RUPTURA</option>
+                <option value="SEM RUPTURA">SEM RUPTURA</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label for="filterStatusEstoque">Status Estoque (Múltiplo)</label>
+            <select id="filterStatusEstoque" class="filter-input" multiple size="4">
+                <option value="">Todos Status</option>
+                <option value="COM ESTOQUE LOJA / COM ESTOQUE CDBR">COM ESTOQUE LOJA / COM ESTOQUE CDBR</option>
+                <option value="SEM ESTOQUE LOJA / SEM ESTOQUE CDBR">SEM ESTOQUE LOJA / SEM ESTOQUE CDBR</option>
+                <option value="COM ESTOQUE LOJA / SEM ESTOQUE CDBR">COM ESTOQUE LOJA / SEM ESTOQUE CDBR</option>
+                <option value="SEM ESTOQUE LOJA / COM ESTOQUE CDBR">SEM ESTOQUE LOJA / COM ESTOQUE CDBR</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label for="filterTemVenda">Vendas</label>
+            <select id="filterTemVenda" class="filter-input">
+                <option value="">Todas Vendas</option>
+                <option value="COM VENDA">COM VENDA</option>
+                <option value="SEM VENDA">SEM VENDA</option>
+            </select>
+        </div>
+    </div>
+</section>
 
-    <!-- Scripts -->
-    <script src="js/config.js"></script>
-    <script src="js/dataProcessor.js"></script>
-    <script src="js/filters.js"></script>
-    <script src="js/dashboard.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="js/main.js"></script>
-</body>
-</html>
+<!-- Mini Tables -->
+<section class="mini-tables">
+    <div class="mini-table-container">
+        <h3>TOP 10 PRODUTOS EM RUPTURA GERAL</h3>
+        <div id="topProdutosTable" class="mini-table-content"></div>
+    </div>
+    <div class="mini-table-container">
+        <h3>RUPTURA POR LOJA</h3>
+        <div id="rupturaPorLojaTable" class="mini-table-content"></div>
+    </div>
+    <div class="mini-table-container">
+        <h3>Resumo de Rupturas</h3>
+        <div id="rupturasTable" class="mini-table-content"></div>
+    </div>
+    <div class="mini-table-container">
+        <h3>Status de Estoque</h3>
+        <div id="statusEstoqueTable" class="mini-table-content"></div>
+    </div>
+</section>
