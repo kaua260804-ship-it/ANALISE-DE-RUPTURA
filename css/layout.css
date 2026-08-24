@@ -1,0 +1,458 @@
+/* ===========================================
+   FILTERS
+   =========================================== */
+.filters {
+    background: var(--bg-white);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin: 2rem 0;
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--bg-gray);
+}
+
+.filter-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.filter-input {
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-family: var(--font-family);
+    transition: var(--transition);
+    background: var(--bg-white);
+    color: var(--text-primary);
+    width: 100%;
+    text-align: center;
+}
+
+.filter-input:hover {
+    border-color: var(--secondary-color);
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.filter-input::placeholder {
+    color: var(--text-light);
+    text-align: center;
+}
+
+select.filter-input {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2rem;
+}
+
+.btn-secondary {
+    background: var(--bg-gray);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.btn-secondary:hover {
+    background: var(--border-color);
+    border-color: var(--secondary-color);
+}
+
+/* ===========================================
+   TABLE CONTAINER
+   =========================================== */
+.table-container {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin: 2rem 0;
+    overflow: hidden;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.table-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.table-header > div {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    max-height: 600px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--secondary-color) var(--bg-gray);
+}
+
+.table-wrapper::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+    background: var(--bg-gray);
+    border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 4px;
+}
+
+#dataTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    min-width: 1200px;
+}
+
+#dataTable thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+#dataTable thead th {
+    background: var(--bg-gray);
+    padding: 0.875rem 0.75rem;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    border-bottom: 2px solid var(--border-color);
+    transition: var(--transition);
+    position: relative;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#dataTable thead th:hover {
+    background: #e2e8f0;
+}
+
+#dataTable thead th::after {
+    content: '↕';
+    position: absolute;
+    right: 0.5rem;
+    opacity: 0.3;
+    font-size: 0.7rem;
+}
+
+#dataTable thead th[data-sort]:hover::after {
+    opacity: 0.6;
+}
+
+#dataTable tbody td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+    text-align: center;
+}
+
+#dataTable tbody tr {
+    transition: var(--transition);
+}
+
+#dataTable tbody tr:hover {
+    background: var(--bg-light);
+}
+
+#dataTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===========================================
+   BUTTONS
+   =========================================== */
+.btn-export {
+    background: var(--success-color);
+    color: white;
+    border: none;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.btn-export:hover {
+    background: var(--success-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-export:active {
+    transform: translateY(0);
+}
+
+/* ===========================================
+   PAGINATION
+   =========================================== */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-white);
+}
+
+.btn-pagination {
+    background: var(--bg-white);
+    border: 1px solid var(--border-color);
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: var(--transition);
+    color: var(--text-primary);
+}
+
+.btn-pagination:hover:not(:disabled) {
+    background: var(--bg-gray);
+    border-color: var(--secondary-color);
+}
+
+.btn-pagination:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-info {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* ===========================================
+   RESPONSIVE DESIGN
+   =========================================== */
+@media (max-width: 1400px) {
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .mini-tables {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .logo {
+        justify-content: center;
+    }
+    
+    .logo h1 {
+        font-size: 1.25rem;
+    }
+    
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+    
+    .card p {
+        font-size: 1.5rem;
+    }
+    
+    .mini-tables {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .mini-table-container {
+        padding: 1rem;
+    }
+    
+    .filter-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .filter-header {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+    }
+    
+    .table-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .table-header > div {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .btn-export {
+        flex: 1;
+    }
+    
+    #dataTable {
+        font-size: 0.75rem;
+        min-width: 800px;
+    }
+    
+    #dataTable thead th,
+    #dataTable tbody td {
+        padding: 0.5rem;
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+    }
+    
+    .btn-pagination {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .logo h1 {
+        font-size: 1rem;
+    }
+    
+    .btn-reload {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+    
+    .card {
+        padding: 1rem;
+    }
+    
+    .card p {
+        font-size: 1.25rem;
+    }
+    
+    .card-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+    
+    .table-header {
+        padding: 1rem;
+    }
+    
+    .table-header h2 {
+        font-size: 1rem;
+    }
+    
+    .btn-export {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+    
+    .badge {
+        font-size: 0.6rem;
+        padding: 0.2rem 0.4rem;
+    }
+}
+
+/* ===========================================
+   PRINT STYLES
+   =========================================== */
+@media print {
+    .header,
+    .filters,
+    .pagination,
+    .btn-reload,
+    .btn-export,
+    .btn-secondary,
+    .btn-pagination {
+        display: none !important;
+    }
+    
+    .table-container {
+        box-shadow: none;
+        margin: 0;
+    }
+    
+    .table-wrapper {
+        max-height: none;
+        overflow: visible;
+    }
+    
+    #dataTable {
+        font-size: 0.7rem;
+    }
+    
+    .mini-tables {
+        page-break-inside: avoid;
+    }
+}
