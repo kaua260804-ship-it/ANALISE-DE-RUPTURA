@@ -1,69 +1,93 @@
 class FilterManager {
     constructor() {
         this.filters = {
-            searchGlobal: '',
+            mediaVdAcima: '',
+            mediaVdAbaixo: '',
             codigoProduto: '',
             produto: '',
-            empresa: '',
-            comprador: '',
-            categoria: '',
-            grupo: '',
-            subgrupo: '',
+            empresas: [],
+            compradores: [],
+            categorias: [],
+            grupos: [],
+            subgrupos: [],
             ruptura: '',
-            statusEstoque: '',
+            statusEstoque: [],
             temVenda: ''
         };
     }
 
     applyFilters(data) {
         return data.filter(item => {
-            // Busca global
-            if (this.filters.searchGlobal) {
-                const searchStr = JSON.stringify(item).toLowerCase();
-                if (!searchStr.includes(this.filters.searchGlobal.toLowerCase())) {
+            // Filtro de Média de Venda Acima
+            if (this.filters.mediaVdAcima !== '' && this.filters.mediaVdAcima !== null) {
+                const valorMinimo = parseFloat(this.filters.mediaVdAcima);
+                if (!isNaN(valorMinimo) && item.mediaVendaMes < valorMinimo) {
                     return false;
                 }
             }
             
-            // Filtros específicos
+            // Filtro de Média de Venda Abaixo
+            if (this.filters.mediaVdAbaixo !== '' && this.filters.mediaVdAbaixo !== null) {
+                const valorMaximo = parseFloat(this.filters.mediaVdAbaixo);
+                if (!isNaN(valorMaximo) && item.mediaVendaMes > valorMaximo) {
+                    return false;
+                }
+            }
+            
+            // Filtro de Código
             if (this.filters.codigoProduto && 
                 !String(item.codigoProduto).toLowerCase().includes(this.filters.codigoProduto.toLowerCase())) {
                 return false;
             }
             
+            // Filtro de Produto
             if (this.filters.produto && 
                 !String(item.produto).toLowerCase().includes(this.filters.produto.toLowerCase())) {
                 return false;
             }
             
-            if (this.filters.empresa && item.empresa !== this.filters.empresa) {
+            // Filtro de Empresas (múltipla escolha)
+            if (this.filters.empresas.length > 0 && 
+                !this.filters.empresas.includes(item.empresa)) {
                 return false;
             }
             
-            if (this.filters.comprador && item.comprador !== this.filters.comprador) {
+            // Filtro de Compradores (múltipla escolha)
+            if (this.filters.compradores.length > 0 && 
+                !this.filters.compradores.includes(item.comprador)) {
                 return false;
             }
             
-            if (this.filters.categoria && item.categoria !== this.filters.categoria) {
+            // Filtro de Categorias (múltipla escolha)
+            if (this.filters.categorias.length > 0 && 
+                !this.filters.categorias.includes(item.categoria)) {
                 return false;
             }
             
-            if (this.filters.grupo && item.grupo !== this.filters.grupo) {
+            // Filtro de Grupos (múltipla escolha)
+            if (this.filters.grupos.length > 0 && 
+                !this.filters.grupos.includes(item.grupo)) {
                 return false;
             }
             
-            if (this.filters.subgrupo && item.subgrupo !== this.filters.subgrupo) {
+            // Filtro de Subgrupos (múltipla escolha)
+            if (this.filters.subgrupos.length > 0 && 
+                !this.filters.subgrupos.includes(item.subgrupo)) {
                 return false;
             }
             
+            // Filtro de Ruptura
             if (this.filters.ruptura && item.ruptura !== this.filters.ruptura) {
                 return false;
             }
             
-            if (this.filters.statusEstoque && item.statusEstoque !== this.filters.statusEstoque) {
+            // Filtro de Status Estoque (múltipla escolha)
+            if (this.filters.statusEstoque.length > 0 && 
+                !this.filters.statusEstoque.includes(item.statusEstoque)) {
                 return false;
             }
             
+            // Filtro de Venda
             if (this.filters.temVenda === 'COM VENDA' && !item.temVenda) {
                 return false;
             }
@@ -82,16 +106,17 @@ class FilterManager {
 
     clearFilters() {
         this.filters = {
-            searchGlobal: '',
+            mediaVdAcima: '',
+            mediaVdAbaixo: '',
             codigoProduto: '',
             produto: '',
-            empresa: '',
-            comprador: '',
-            categoria: '',
-            grupo: '',
-            subgrupo: '',
+            empresas: [],
+            compradores: [],
+            categorias: [],
+            grupos: [],
+            subgrupos: [],
             ruptura: '',
-            statusEstoque: '',
+            statusEstoque: [],
             temVenda: ''
         };
     }
