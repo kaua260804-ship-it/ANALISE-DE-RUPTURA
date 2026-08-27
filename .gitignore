@@ -1,0 +1,222 @@
+# ============================================
+# ARQUIVOS EXCEL (DADOS SENSÍVEIS)
+# ============================================
+# Descomente as linhas abaixo se NÃO quiser versionar os arquivos Excel
+# *.xlsx
+# *.xls
+# *.xlsm
+# *.csv
+
+# Se quiser versionar apenas alguns arquivos Excel específicos:
+# !BASE ESTOQUE.xlsx
+# !BASE CADASTRO.xlsx
+# !VENDA 26.xlsx
+
+# ============================================
+# DEPENDÊNCIAS E BIBLIOTECAS
+# ============================================
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ============================================
+# ARQUIVOS DE SISTEMA OPERACIONAL
+# ============================================
+# Windows
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+
+# Linux
+.directory
+.Trash-*
+
+# ============================================
+# IDEs E EDITORES
+# ============================================
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/
+*.vsix
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Atom
+.atom/
+*.atom-project
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# ============================================
+# ARQUIVOS TEMPORÁRIOS E CACHE
+# ============================================
+# Logs
+*.log
+logs/
+*.log.*
+
+# Cache
+.cache/
+.tmp/
+temp/
+tmp/
+*.tmp
+
+# Arquivos temporários do Excel
+~$*.xlsx
+~$*.xls
+~$*.xlsm
+
+# Arquivos temporários do Office
+~*.docx
+~*.pptx
+~*.xlsx
+
+# ============================================
+# ARQUIVOS DE CONFIGURAÇÃO LOCAL
+# ============================================
+# Configurações pessoais
+config.local.json
+config.local.js
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# ============================================
+# BUILD E DEPLOY
+# ============================================
+# Builds
+build/
+dist/
+out/
+*.bundle.js
+*.min.js
+*.min.css
+
+# ============================================
+# BACKUP E VERSIONAMENTO
+# ============================================
+# Backups
+*.bak
+*.backup
+*.old
+*.orig
+*.save
+
+# ============================================
+# ARQUIVOS ESPECÍFICOS DO PROJETO
+# ============================================
+# Se você gerar relatórios exportados
+dados_analise.csv
+dados_analise.xlsx
+relatorios/
+exports/
+downloads/
+
+# ============================================
+# GIT
+# ============================================
+.git/
+.gitignore
+.gitattributes
+.gitmodules
+
+# ============================================
+# DIVERSOS
+# ============================================
+# Arquivos compactados
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Arquivos de texto temporários
+*.tmp.txt
+*.temp.txt
+
+# Screenshots e imagens temporárias
+screenshots/
+*.png.tmp
+*.jpg.tmp
+
+# ============================================
+# PERMITIR ARQUIVOS ESPECÍFICOS
+# ============================================
+# Permitir README
+!README.md
+
+# Permitir arquivos HTML, CSS, JS
+!*.html
+!*.css
+!*.js
+
+# Permitir configurações específicas
+!config.json
+!js/config.js
+
+# Permitir imagens e ícones
+!*.svg
+!*.png
+!*.jpg
+!*.jpeg
+!*.gif
+!*.ico
+!*.webp
+
+# ============================================
+# NOTAS
+# ============================================
+# Para versionar os arquivos Excel (se necessário):
+# 1. Remova/Comente as linhas *.xlsx
+# 2. Ou use git add -f "BASE ESTOQUE.xlsx"
+#
+# Para ignorar apenas arquivos específicos:
+# BASE ESTOQUE.xlsx
+# BASE CADASTRO.xlsx
+# VENDA 26.xlsx
+#
+# Para verificar quais arquivos serão ignorados:
+# git status --ignored
