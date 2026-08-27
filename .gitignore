@@ -1,35 +1,84 @@
 # ============================================
-# ARQUIVOS EXCEL (DADOS SENSÍVEIS)
+# ARQUIVOS DE DADOS SENSÍVEIS E PLANILHAS
 # ============================================
-# Descomente as linhas abaixo se NÃO quiser versionar os arquivos Excel
-# *.xlsx
-# *.xls
-# *.xlsm
-# *.csv
 
-# Se quiser versionar apenas alguns arquivos Excel específicos:
-# !BASE ESTOQUE.xlsx
-# !BASE CADASTRO.xlsx
-# !VENDA 26.xlsx
+# Planilhas Excel (dados sensíveis)
+*.xlsx
+*.xls
+*.xlsm
+*.xlsb
+*.csv
+*.ods
+
+# Arquivos de dados processados
+*.json
+!package.json
+!config.json.example
+
+# Backups de planilhas
+*.bak
+*.backup
+*~
 
 # ============================================
-# DEPENDÊNCIAS E BIBLIOTECAS
+# ARQUIVOS DE CONFIGURAÇÃO SENSÍVEIS
 # ============================================
+
+# Configurações com dados sensíveis
+config.json
+config.local.json
+config.production.json
+.env
+.env.local
+.env.production
+.env.development
+
+# Credenciais e chaves
+*.key
+*.pem
+*.cert
+*.crt
+credentials.json
+secrets.json
+
+# ============================================
+# LOGS E DADOS TEMPORÁRIOS
+# ============================================
+
+# Logs
+*.log
+logs/
+*.tmp
+*.temp
+
+# Arquivos temporários do Excel
+~$*.xlsx
+~$*.xls
+~$*.xlsm
+
+# ============================================
+# CACHE E DEPENDÊNCIAS
+# ============================================
+
 # Node.js
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-package-lock.json
-yarn.lock
+
+# Cache
+.cache/
+.tmp/
+.temp/
 
 # ============================================
-# ARQUIVOS DE SISTEMA OPERACIONAL
+# SISTEMA OPERACIONAL
 # ============================================
+
 # Windows
 Thumbs.db
-Desktop.ini
 ehthumbs.db
+Desktop.ini
 $RECYCLE.BIN/
 
 # macOS
@@ -39,39 +88,28 @@ $RECYCLE.BIN/
 ._*
 .Spotlight-V100
 .Trashes
-.fseventsd
 
 # Linux
 .directory
 .Trash-*
 
 # ============================================
-# IDEs E EDITORES
+# IDE E EDITORES
 # ============================================
-# VS Code
+
+# Visual Studio Code
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
-.history/
-*.vsix
-
-# Sublime Text
-*.sublime-project
-*.sublime-workspace
-
-# Atom
-.atom/
-*.atom-project
 
 # IntelliJ IDEA
 .idea/
 *.iml
 *.ipr
 *.iws
-out/
 
 # Eclipse
 .classpath
@@ -79,144 +117,81 @@ out/
 .settings/
 bin/
 
-# NetBeans
-nbproject/private/
-build/
-nbbuild/
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ============================================
+# ARQUIVOS COMPILADOS
+# ============================================
+
+# JavaScript compilado
 dist/
-nbdist/
-.nb-gradle/
-
-# ============================================
-# ARQUIVOS TEMPORÁRIOS E CACHE
-# ============================================
-# Logs
-*.log
-logs/
-*.log.*
-
-# Cache
-.cache/
-.tmp/
-temp/
-tmp/
-*.tmp
-
-# Arquivos temporários do Excel
-~$*.xlsx
-~$*.xls
-~$*.xlsm
-
-# Arquivos temporários do Office
-~*.docx
-~*.pptx
-~*.xlsx
-
-# ============================================
-# ARQUIVOS DE CONFIGURAÇÃO LOCAL
-# ============================================
-# Configurações pessoais
-config.local.json
-config.local.js
-.env
-.env.local
-.env.development
-.env.production
-.env.test
-
-# ============================================
-# BUILD E DEPLOY
-# ============================================
-# Builds
 build/
-dist/
 out/
-*.bundle.js
 *.min.js
-*.min.css
+
+# TypeScript
+*.tsbuildinfo
 
 # ============================================
-# BACKUP E VERSIONAMENTO
+# DADOS SENSÍVEIS ADICIONAIS
 # ============================================
+
+# Dados de clientes/fornecedores
+data/
+dados/
+planilhas/
+excel/
+sheets/
+spreadsheets/
+
+# Relatórios gerados
+relatorios/
+reports/
+exports/
+output/
+
 # Backups
-*.bak
-*.backup
-*.old
-*.orig
-*.save
+backup/
+backups/
+*.sql
+*.db
+*.sqlite
 
 # ============================================
 # ARQUIVOS ESPECÍFICOS DO PROJETO
 # ============================================
-# Se você gerar relatórios exportados
-dados_analise.csv
-dados_analise.xlsx
-relatorios/
-exports/
-downloads/
+
+# Planilhas específicas (descomente conforme necessário)
+# BASE\ ESTOQUE.xlsx
+# BASE\ CADASTRO.xlsx
+# VENDA\ 26.xlsx
+# VENDA\ 2026.xlsx
+# VENDA2026.xlsx
+# VENDA\ 2025.xlsx
+# VENDA2025.xlsx
+
+# Dados processados
+processed_data.json
+filtered_data.json
+exported_data.*
 
 # ============================================
-# GIT
+# EXCEÇÕES (arquivos que NÃO devem ser ignorados)
 # ============================================
-.git/
-.gitignore
-.gitattributes
-.gitmodules
 
-# ============================================
-# DIVERSOS
-# ============================================
-# Arquivos compactados
-*.zip
-*.tar
-*.tar.gz
-*.rar
-*.7z
-
-# Arquivos de texto temporários
-*.tmp.txt
-*.temp.txt
-
-# Screenshots e imagens temporárias
-screenshots/
-*.png.tmp
-*.jpg.tmp
-
-# ============================================
-# PERMITIR ARQUIVOS ESPECÍFICOS
-# ============================================
-# Permitir README
+# Mantenha arquivos de exemplo/documentação
 !README.md
+!CHANGELOG.md
+!LICENSE
+!docs/
+!examples/
+!sample-data/
+!dados-exemplo/
+!planilhas-exemplo/
 
-# Permitir arquivos HTML, CSS, JS
-!*.html
-!*.css
-!*.js
-
-# Permitir configurações específicas
-!config.json
-!js/config.js
-
-# Permitir imagens e ícones
-!*.svg
-!*.png
-!*.jpg
-!*.jpeg
-!*.gif
-!*.ico
-!*.webp
-
-# ============================================
-# NOTAS
-# ============================================
-# Para versionar os arquivos Excel (se necessário):
-# 1. Remova/Comente as linhas *.xlsx
-# 2. Ou use git add -f "BASE ESTOQUE.xlsx"
-#
-# Para ignorar apenas arquivos específicos:
-# BASE ESTOQUE.xlsx
-# BASE CADASTRO.xlsx
-# VENDA 26.xlsx
-#
-# Para verificar quais arquivos serão ignorados:
-# git status --ignored
+# Mantenha configurações de exemplo
+!config.example.json
+!config.template.json
+!.env.example
